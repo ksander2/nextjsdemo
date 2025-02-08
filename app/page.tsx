@@ -18,9 +18,9 @@ type User = {
 
 export default function Home() {
   const [users, setUsers] = useState<User[]>();
-
+  const api = `${process.env.NEXT_PUBLIC_API_ADDRESS}/users`;
   useEffect(() => {
-    fetch('https://jsonplaceholder.typicode.com/users')
+    fetch(api)
       .then(response => response.json())
       .then(result => setUsers(result));
   }, [])

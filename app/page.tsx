@@ -11,6 +11,7 @@ type User = {
 export default function Home() {
   const [users, setUsers] = useState<User[]>();
   const api = `${process.env.NEXT_PUBLIC_API_ADDRESS}/users`;
+  console.log('env', process.env.NEXT_PUBLIC_API_ADDRESS);
   useEffect(() => {
     fetch(api)
       .then(response => response.json())

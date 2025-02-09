@@ -1,33 +1,15 @@
-'use client'
+'use server'
+import { User } from './type';
+import { MyList } from './MyList';
 
-import { useEffect, useState } from "react";
-import { List } from 'antd';
-
-type User = {
-  id: number;
-  name: string;
-}
-
-export default function Home() {
-  const [users, setUsers] = useState<User[]>();
+export default async function Home() {
   const api = `${process.env.NEXT_PUBLIC_API_ADDRESS}/users`;
-  console.log('env', process.env.NEXT_PUBLIC_API_ADDRESS);
-  useEffect(() => {
-    fetch(api)
-      .then(response => response.json())
-      .then(result => setUsers(result));
-  }, [])
+  const result = await fetch(api);
+  const users = await result.json() as User[];
 
   return (
     <div>
-      <List<User>
-        size="small"
-        header={<div>Header</div>}
-        footer={<div>Footer</div>}
-        bordered
-        dataSource={users}
-        renderItem={(item) => <List.Item>{item.name}</List.Item>}
-      />
+      <MyList users={users} />
     </div>
   );
 }
